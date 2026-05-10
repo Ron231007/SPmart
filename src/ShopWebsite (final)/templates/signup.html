@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sign Up</title>
+  <style>
+      body {
+                  font-family: Arial, sans-serif;
+                  margin: 0;               /* remove default body margin */
+                  padding: 0;              /* remove body padding */
+                  background: linear-gradient(135deg, #a8edea, #fed6e3, #ffe6f0);            
+                  display: flex;
+                  justify-content: center; /* horizontal center */
+                  align-items: center;     /* vertical center */
+                  height: 100vh;       /* full viewport height */
+                  width: 100%;
+                  box-sizing: border-box;
+              }    
+      .card {
+                  width: 45%;
+                  padding: 30px;
+                  box-sizing: border-box;
+                  box-shadow: 0 6px 20px rgba(50, 50, 50, 0.1);
+                  border: 2px solid rgba(50, 50, 50, 0.15);
+              }    
+
+      input {
+          border-radius: 8px;
+          border: 2px solid white;
+          height: 50px;
+          width: 100%;
+          font-size: 200%;
+
+          
+          
+      }
+
+      button {padding: 10px 0;
+                  border-radius: 6px;
+                  border: none;
+                  cursor: pointer;
+                  font-size: 1rem;
+                  width: 34%;
+                  transition: transform 0.2s ease;
+                  background-color: #ffffff; 
+                  border: 2px solid #7e57c2; 
+                  color: #7e57c2;
+                  margin-right: 0;
+                  margin-top: 12px;
+      }
+
+          button:hover{
+                      background-color: #7e57c2;
+                      border: 2px solid #ffffff; 
+                      color: #ffffff;
+                      transform: scale(1.05);
+
+                    }
+        
+    input[readonly] { background: #eee; }
+    
+    .flash { color:#b71c1c; margin-bottom:10px; }
+    
+    a { color:#007bff; text-decoration:none; }
+
+    form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;       /* full width of card */
+            align-items: flex-start; /* left-align everything inside */
+            gap: 20px;
+        }
+
+    .form_row {
+      width: 100%;       /* same width as form */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* left-align label & input */
+
+  }
+
+
+
+   .navbar {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-top: 12px;
+            width: 100%;
+        }
+
+
+    .back{
+            background-color: #ffffff; 
+            color: #7e8fa6;  
+            border: 2px solid #7e8fa6;    
+            transform: scale(0.95);     
+
+        }
+  
+    .back:hover{
+          background-color: #7e8fa6; 
+          color: #ffffff;  
+          border: 2px solid #7e8fa6; 
+          transform: scale(1.05);
+          
+      }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Create account</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for m in messages %}{{ m }}<br>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      {{ form.hidden_tag() }}
+
+      <div class="form_row">
+        <label>ID (automatically assigned):</label>
+        {{ form.user_id(readonly=True) }}
+        {% if form.user_id.errors %}
+          <div class="flash">{{ form.user_id.errors[0] }}</div>
+        {% endif %}
+      </div>
+
+
+      <div class="form_row">
+        <label>Password (8 digits, >=4 distinct digits): </label>
+        {{ form.passwd(type="password") }}
+        {% if form.passwd.errors %}
+          <div class="flash">{{ form.passwd.errors[0] }}</div>
+        {% endif %}
+
+      </div>
+      <div class="form_row">
+
+        <label>10 Digits ATM Card ID (optional): </label>
+        {{ form.card_id() }}
+        {% if form.card_id.errors %}
+          <div class="flash">{{ form.card_id.errors[0] }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form_row">
+        <label>10 Digits or less ATM Card Password (optional):</label>
+        {{ form.card_password() }}
+        {% if form.card_password.errors %}
+          <div class="flash">{{ form.card_password.errors[0] }}</div>
+        {% endif %}
+      </div>
+      
+      <div class="navbar">
+        <button type="button" onclick="window.location.href='/'" class="back">
+                    Back
+                </button>
+        <button type="submit">{{ form.submit.label.text }}</button>
+      </div>
+      
+    </form>
+
+    <p style="margin-top:12px">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+  </div>
+</body>
+</html>

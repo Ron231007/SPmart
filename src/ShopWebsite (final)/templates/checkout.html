@@ -1,0 +1,122 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <style>
+      body {
+                  font-family: Arial, sans-serif;
+                  margin: 0;               /* remove default body margin */
+                  padding: 0;              /* remove body padding */
+                  background: linear-gradient(135deg, #a8edea, #fed6e3, #ffe6f0);            
+                  display: flex;
+                  justify-content: center; /* horizontal center */
+                  align-items: center;     /* vertical center */
+                  height: 100vh;       /* full viewport height */
+                  width: 100%;
+                  box-sizing: border-box;
+              }
+      label {
+            font-size: 32px;
+            padding-bottom:16px;
+          
+        }
+
+      .options, input {
+          border-radius: 8px;
+          border: 2px solid white;
+          height: 50px;
+          width: 100%;
+          
+      }
+
+      .card {
+            width: 45%;
+            padding: 30px;
+            box-sizing: border-box;
+            box-shadow: 0 6px 20px rgba(50, 50, 50, 0.1);
+            border: 2px solid rgba(50, 50, 50, 0.15);
+        }
+
+      .place_order {
+                  padding: 10px;
+                  border-radius: 6px;
+                  border: none;
+                  cursor: pointer;
+                  font-size: 1rem;
+                  transition: transform 0.2s ease;
+                  background-color: #ffffff; 
+                  border: 2px solid #7e57c2; 
+                  color: #7e57c2;
+                  margin-right: 0;
+                  margin-top: 12px;
+      }
+
+          .place_order:hover{
+                      background-color: #7e57c2;
+                      border: 2px solid #ffffff; 
+                      color: #ffffff;
+                      transform: scale(1.01);
+
+              }  
+      .flash { color:#b71c1c; margin-bottom:10px; }
+      .navbar {display: flex; justify-content: space-between;}
+
+        form {
+                display: flex;
+                flex-direction: column;
+                width: 100%;       /* full width of card */
+                align-items: flex-start; /* left-align everything inside */
+                gap: 20px;
+            }
+
+            
+        .form_row {
+                width: 100%;       /* same width as form */
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start; /* left-align label & input */
+            }
+
+        
+          h1{
+            margin-bottom: 40px;
+            margin-top: 0;
+            color: #333333;
+            font-size: 350%;
+            text-align: start;
+        }
+
+        .po{
+          width: 100%;
+        
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Checkout</h1>
+      <form method="post">
+        {{ form.hidden_tag() }}
+        
+        <label>{{ form.name.label }}</label>
+        {{ form.name(size=40) }}
+
+        <label>{{ form.option.label }}</label>
+        {% if form.option.errors %}
+        <div class="flash">{{ form.option.errors[0] }}</div>
+        {% endif %}
+        {{ form.option(class="options") }}
+        
+        <div style="text-align:right" class="po">
+          {{ form.submit(class="place_order") }}
+        </div>
+      </form>
+      <div class="navbar">
+        <p style="margin-top:12px"><a href="{{ url_for('cart') }}">Back to cart</a></p>
+        <p style="margin-top:12px"><a href="{{ url_for('edit_card') }}">Add Card</a></p>
+
+
+      </div>
+    </div>
+  </body>
+  </html>

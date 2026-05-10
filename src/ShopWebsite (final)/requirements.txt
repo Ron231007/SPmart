@@ -1,0 +1,8 @@
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+qrcode[pil]
+mysql-connector-python
+Flask-Migrate
+WTForms
+bcrypt

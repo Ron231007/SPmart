@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop Demo</title>
+  <style>
+    body { display: flex; 
+      height: 100vh;
+      flex-direction: column; 
+      align-items: center; 
+      font-family: Arial, sans-serif;
+      margin:0; 
+      padding:0;     
+      background: linear-gradient(135deg, #a8edea, #fed6e3, #ffe6f0);            
+       
+ }
+   
+    header { width: 100%; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 12px 24px;
+      box-sizing:border-box;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06); 
+    }
+    
+    .grid { display: grid; 
+      grid-template-columns: repeat(auto-fill, 
+      minmax(180px, 1fr)); gap: 20px; width: 80%; 
+      margin: 28px 0; 
+      }
+    
+    .grid-item { box-sizing: border-box;
+            box-sizing: border-box;
+            box-shadow: 0 6px 20px rgba(50, 50, 50, 0.1);
+            border: 2px solid rgba(50, 50, 50, 0.15);
+            border-radius: 8px; 
+            padding: 10px; 
+            text-align: center;
+            transition: transform 0.2s ease;
+
+            
+            }
+
+    .grid-item:hover{
+      transform: scale(1.05);
+    
+    }
+    
+    
+    .product-link { 
+                    color: black; 
+                    text-decoration: none; }
+    
+    nav a { margin-left: 12px;
+            text-decoration:none;
+            font-weight:600; }
+    
+    .msgs { width: 80%; 
+      margin-top: 8px; 
+      color: #b71c1c; }
+
+    header div a {
+        margin-left: 12px;  /* space between each link */
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h2 style="margin:0">SP Mart</h2>
+      <div style="font-size:12px; color:#666">Simple shop</div>
+    </div>
+
+    <div>
+      {% if session.get('user_id') %}
+        <span style="margin-right:10px">Hi {{ session.get('user_id') }}</span>
+        <a href="{{ url_for('logout') }}">Log out</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Log in</a>
+        <a href="{{ url_for('signup') }}">Sign up</a>
+      {% endif %}
+      <a class="cart-link" href="{{ url_for('cart') }}">View Cart ({{ session.get('cart', {})|length }} items)</a>
+    </div>
+  </header>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="msgs">
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="grid">
+    {% for p in products %}
+      <div class="grid-item">
+        <a class="product-link" href="{{ url_for('detail', prod_id=p.id) }}">
+          <img src="{{ url_for('static', filename='img/' + p.name.lower() + '.jpg') }}" width="100" alt="{{ p.name }}"><br>
+          <strong>{{ p.name }}</strong><br>
+          ${{ '%.2f'|format(p.price) }}
+        </a><br><br>
+        <a href="{{ url_for('add', prod_id=p.id) }}">Add to Cart</a>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

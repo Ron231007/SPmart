@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;              
+            padding: 0;            
+            background: linear-gradient(135deg, #a8edea, #fed6e3, #ffe6f0);            
+            display: flex;
+            justify-content: center;
+            align-items: center;    
+            height: 100vh;       
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        label {
+            font-size: 32px;
+            padding-bottom:16px;
+          
+        }
+
+        input {
+            border-radius: 8px;
+            border: 2px solid white;
+            height: 50px;
+            width: 100%;
+            font-size: 200%;
+
+            
+            
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-top: 12px;
+            width: 100%;
+        }
+
+        .back, .submit {
+            padding: 10px 0;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 10px;
+            width: 34%;
+            transition: transform 0.2s ease; /* smooth animation */
+
+        }
+
+        .back{
+            background-color: #ffffff; 
+            color: #7e8fa6;  
+            border: 2px solid #7e8fa6;    
+            transform: scale(0.95);     
+
+        }
+
+        .back:hover{
+            background-color: #7e8fa6; 
+            color: #ffffff;  
+            border: 2px solid #7e8fa6; 
+            transform: scale(1.05);
+            
+        }
+
+        .submit {
+            background-color: #ffffff; 
+            border: 2px solid #7e57c2; 
+            color: #7e57c2;
+            margin-right: 0; 
+        }
+
+        .submit:hover{
+            background-color: #7e57c2;
+            border: 2px solid #ffffff; 
+            color: #ffffff;
+            transform: scale(1.05);
+
+        }
+
+       .card {
+            width: 45%;
+            padding: 30px;
+            box-sizing: border-box;
+            box-shadow: 0 6px 20px rgba(50, 50, 50, 0.1);
+            border: 2px solid rgba(50, 50, 50, 0.15);
+        }
+
+        h1{
+            margin-bottom: 40px;
+            margin-top: 0;
+            color: #333333;
+            font-size: 350%;
+            text-align: start;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;       /* full width of card */
+            align-items: flex-start; /* left-align everything inside */
+            gap: 20px;
+        }
+
+        .form_row {
+            width: 100%;       /* same width as form */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* left-align label & input */
+        }
+        .flash { color:#b71c1c; margin-bottom:10px; }
+
+
+  </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Edit ATM Card</h1>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+           
+            <div class="form_row">
+            <label for="card_id">Card ID:</label>
+            {% if form.card_id.errors %}
+            <div class="flash">{{ form.card_id.errors[0] }}</div>
+            {% endif %}
+            {{ form.card_id() }}<br><br>
+            
+           </div>
+
+            <div class="form_row">
+                <label for="card_password">Card Password:</label>
+                {% if form.card_password.errors %}
+                <div class="flash">{{ form.card_password.errors[0] }}</div>
+                {% endif %}
+                {{ form.card_password() }}<br><br>
+                
+            </div>
+
+            
+            <div class="navbar">
+                <button type="button" onclick="window.location.href='/checkout'" class="back">
+                    Back
+                </button>
+                {{ form.submit(class="submit") }}
+            </div>
+                
+        </form>
+
+    </div>
+   
+</body>
+</html>

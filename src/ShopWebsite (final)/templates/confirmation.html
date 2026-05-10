@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Confirmation</title>
+  <style>
+      body {
+            font-family: Arial, sans-serif;
+            margin: 0;               /* remove default body margin */
+            padding: 0;              /* remove body padding */
+            background: linear-gradient(135deg, #a8edea, #fed6e3, #ffe6f0);            
+            display: flex;
+            justify-content: center; /* horizontal center */
+            align-items: center;     /* vertical center */
+            height: 100vh;       /* full viewport height */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+            .card {
+          width: 45%;
+          padding: 30px;
+          box-sizing: border-box;
+          box-shadow: 0 6px 20px rgba(50, 50, 50, 0.1);
+          border: 2px solid rgba(50, 50, 50, 0.15);
+      }
+
+       h1{
+          margin-bottom: 40px;
+          margin-top: 0;
+          color: #333333;
+          font-size: 350%;
+          text-align: start;
+      }
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Thank you, {{ order.customer_name }}!</h1>
+    <p>Order #{{ order.id }} placed.</p>
+    <p>Total: ${{ '%.2f'|format(order.total_amount) }}</p>
+    {% if order.option=='pickup' %}
+      <p>Show this QR at store:</p>
+      <img src="{{ qr_url }}" alt="QR Code">
+    {% else %}
+      <p>Your items will be delivered for $4.00 fee.</p>
+    {% endif %}
+    <p><a href="{{ url_for('index') }}">Back to shop</a></p>
+  </div>
+  
+</body>
+</html>
